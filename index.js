@@ -6,3 +6,7 @@ var signup=document.getElementById("signup")
 signup.addEventListener("click",()=>{
     window.location.href="./signup.html"
 })
+var search=document.getElementById("search")
+search.addEventListener("click",()=>{
+    window.location.href="./search.html"
+})
