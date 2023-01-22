@@ -10,3 +10,11 @@ var search=document.getElementById("search")
 search.addEventListener("click",()=>{
     window.location.href="./search.html"
 })
+var cart=document.getElementById("cart")
+cart.addEventListener("click",()=>{
+    window.location.href="./cart.html"
+})
+var contact=document.getElementById("contact")
+contact.addEventListener("click",()=>{
+    window.location.href="./contactus.html"
+})
