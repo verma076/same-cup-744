@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
-    <title>Home Page</title>
+    <title>search VT</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <style>
       /* All Your css for Home page goes here  */
@@ -99,12 +99,18 @@ margin-bottom: 8px;
         margin-top:20px;
         height: 25px;
      }
+     h1{
+        text-align: center;
+        color: darkgreen;
+     }
+     
       
     </style>
   </head>
 
   <body>
     <div class="nav">
+        
         <img src="vt (1).png" alt="error">
         
         <input id="search" type="text" placeholder=" Search VT">
@@ -112,13 +118,14 @@ margin-bottom: 8px;
 
         <div class="left">
             <a id="sign"  href="./sign in.html"><i class ="fa fa-user" aria-hidden="true"></i> Sign In </a> 
-            <a href="#"><i class ="fa fa-headphones" aria-hidden="true"></i> Contact us</a>
+            <a href="./contactus.html"><i class ="fa fa-headphones" aria-hidden="true"></i> Contact us</a>
             <a href="#"><i class ="fa fa-globe" aria-hidden="true"></i> IN/EN</a>
-            <a href="#"><i class ="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a>
+            <a href="./cart.html"><i class ="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a>
         </div>
        
     </div>
     <div class="bottom">
+        <a href="./index.html">Home</a>
         <a href="#">APEX</a>
         <a href="#">Products</a>
         <a href="#">Solutions</a>
@@ -129,10 +136,12 @@ margin-bottom: 8px;
         <a href="#">About Us</a>
     </div>
     <div class="nav">
+       
       <h1>Search your products</h1>
       
     </div>
     <div id="filter">
+       
       <input type="number" id="lower" placeholder="From" />
       <input type="number" id="upper" placeholder="To" />
       <button id="filter-btn">Search</button>
@@ -269,10 +278,10 @@ Display(filtered)
     if(quant===1){
       array.push(element)
      localStorage.setItem("buy",JSON.stringify(array))
-     alert.innerText="Successfully Placed Order"
+     alert.innerText="Added To Cart"
     }
     else{
-      alert.innerText="Already Placed Order"
+      alert.innerText="Already Added To Cart"
     }
   })
   div.append(image,title,desc,price,btn)

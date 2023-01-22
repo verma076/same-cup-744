@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <title>Order Page</title>
+    <style>
+      /* All Your css for Order page goes here  */
+      .nav{
+    width: 100%;
+    height:70px;
+    display: flex;
+    justify-content: space-around;
+    
+
+ }
+ .nav>img{
+     width: 250px;
+     height: 200px;
+     display: block;
+   margin-top: -80px;
+   margin-left: -35px;
+     
+ }
+ #search{
+    width:500px;
+    margin-top: 5px;
+    margin-left: 10px;
+    height: 25px;
+   
+}
+.left{
+    margin-top: 14px;
+    margin-left: 600px;
+}
+.left >a{
+   margin-left: 30px;
+   color: rgb(107, 107, 107);
+   text-decoration: none;
+   
+}
+.bottom{
+    width: 66%;
+    display: flex;
+    justify-content: space-around;
+    justify-items: left;
+}
+.bottom>a{
+justify-content: left;
+text-decoration: none;
+color: rgb(107, 107, 107);
+margin-bottom: 8px;
+
+}
+      #order-container{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap:5px;
+        text-align: center;
+      }
+      #order-container img{
+        width:250px;
+        height:250px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+        <img src="vt (1).png" alt="error">
+        
+        <!-- <input id="search" type="text" placeholder=" Search VT"> -->
+
+
+        <div class="left">
+            <a id="sign"  href="./sign in.html"><i class ="fa fa-user" aria-hidden="true"></i> Sign In </a> 
+            <a href="./contactus.html"><i class ="fa fa-headphones" aria-hidden="true"></i> Contact us</a>
+            <a href="#"><i class ="fa fa-globe" aria-hidden="true"></i> IN/EN</a>
+            <a href="#"><i class ="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a>
+        </div>
+       
+    </div>
+    <div class="bottom">
+        <a href="#">APEX</a>
+        <a href="#">Products</a>
+        <a href="#">Solutions</a>
+        <a href="#">Services</a>
+        <a href="#">Support</a>
+        <a href="#">Deals</a>
+        <a href="#">Find a Store</a>
+        <a href="#">About Us</a>
+    </div>
+    <div class="nav">
+      <h1>Your Cart Items </h1>
+      
+    </div>
+   
+    <div id="cupon">
+      <input type="text" placeholder="Apply Coupon" />
+      <button>Add Cupon</button>
+      <button id="proceed">Proceed To Pay</button>
+    </div>
+    <h1 id="total">
+        Your Total Cart Items Price = <span id="order-total">0</span>
+      </h1>
+    <div id="order-container">
+      <!-- Here Append All the Order Cards here-->
+    </div>
+  </body>
+  <script>
+    var proceed=document.getElementById("proceed")
+    proceed.addEventListener("click",()=>{
+        window.location.href="./paydetails.html"
+    })
+    var quant=0;
+    let ordercont=document.getElementById("order-container")
+    var total_sum=document.getElementById("order-total")
+     var narray=JSON.parse(localStorage.getItem("buy"))
+    if(narray===null){
+      narray=[]
+    
+    }
+    Display(narray)
+    // console.log(narray)
+    function Display(narray){
+      narray.forEach((element)=>{
+
+      
+   let div=document.createElement("div")
+    
+   let title=document.createElement("h3")
+   title.innerText=element.title
+
+   let image=document.createElement("img")
+   image.setAttribute("src",element.image)
+  //  console.log(image)
+  let desc=document.createElement("p")
+  desc.innerText=element.description
+  // console.log(desc)
+  let price=document.createElement("h4")
+  price.innerText=element.price
+  let btn=document.createElement("button")
+  btn.innerText="cancel"
+
+
+  quant=quant+ element.price
+  console.log(quant)
+  var arr=[]
+  arr.push(element)
+  var count=+(1)
+  var btn2=document.createElement("button")
+  btn2.innerText="+"
+  btn2.addEventListener("click",()=>{
+    count++
+    Quantity.innerText=count
+    total_sum.innerText=quant+(count-1)*
+    (element.price)
+
+  })
+  
+  var btn3=document.createElement("button")
+  btn3.innerText="-"
+  btn3.addEventListener("click",()=>{
+    count--
+    var min_quant=Quantity.innerText-count
+    Quantity.innerText=count
+    total_sum.innerText=(total_sum.innerText)-(min_quant*element.price)
+  })
+  var Quantity=document.createElement("h5")
+  Quantity.innerText=count
+
+ 
+
+  div.append(image,title,desc,price,btn2,btn3,Quantity)
+  ordercont.append(div)
+  
+})
+// console.log(quant)
+total_sum.innerText=quant
+var coupon=document.querySelector("input")
+// console.log(coupon.value)
+var coupon_btn=document.querySelector("button")
+coupon_btn.addEventListener("click",function(){
+   
+    // console.log("yes")
+    // console.log(coupon.value)
+
+  var cpn="Verma40"
+  if(coupon.value===cpn){
+    var final_price=Math.floor((quant)*(40/100))
+    // console.log(final_price)
+
+    var final=quant-final_price
+    total_sum.innerText=final
+   
+  }
+  localStorage.setItem("total_amount",JSON.stringify(total_sum.innerText))
+})
+
+    }
+  
+    
+  </script>
+</html>
