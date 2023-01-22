@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <title>Home Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+      /* All Your css for Home page goes here  */
+      .nav{
+    width: 100%;
+    height:70px;
+    display: flex;
+    justify-content: space-around;
+    
+
+ }
+ .nav>img{
+     width: 250px;
+     height: 200px;
+     display: block;
+   margin-top: -80px;
+   margin-left: -45px;
+     
+ }
+ #search{
+    width:500px;
+    margin-top: 5px;
+    margin-left: 10px;
+    height: 25px;
+   
+}
+.left{
+    margin-top: 14px;
+}
+.left >a{
+   margin-left: 30px;
+   color: rgb(107, 107, 107);
+   text-decoration: none;
+   
+}
+.bottom{
+    width: 66%;
+    display: flex;
+    justify-content: space-around;
+    justify-items: left;
+}
+.bottom>a{
+justify-content: left;
+text-decoration: none;
+color: rgb(107, 107, 107);
+margin-bottom: 8px;
+
+}
+
+      #menu-container{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        grid-template-rows: repeat(5);
+        gap:5px;
+        text-align: center;
+        background: local;
+        margin: auto;
+        
+      }
+      #menu-container div{
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      }
+      #menu-container img{
+        width:250px;
+        height:250px;
+      }
+      #menu-container button{
+        
+         text-align: center;
+         height: 30px;
+      }
+      .nav{
+        color: blue;
+      }
+      #filter{
+        margin-left: 300px;
+        
+      }
+      #filter>button{
+        background-color: #0672cb;
+        border:none;
+        height:30px
+      }
+      #filter>input{
+        height:25px;
+        width:300px
+      }
+     #sort{
+        margin-left: 550px;
+        margin-top:20px;
+        height: 25px;
+     }
+      
+    </style>
+  </head>
+
+  <body>
+    <div class="nav">
+        <img src="vt (1).png" alt="error">
+        
+        <input id="search" type="text" placeholder=" Search VT">
+
+
+        <div class="left">
+            <a id="sign"  href="./sign in.html"><i class ="fa fa-user" aria-hidden="true"></i> Sign In </a> 
+            <a href="#"><i class ="fa fa-headphones" aria-hidden="true"></i> Contact us</a>
+            <a href="#"><i class ="fa fa-globe" aria-hidden="true"></i> IN/EN</a>
+            <a href="#"><i class ="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a>
+        </div>
+       
+    </div>
+    <div class="bottom">
+        <a href="#">APEX</a>
+        <a href="#">Products</a>
+        <a href="#">Solutions</a>
+        <a href="#">Services</a>
+        <a href="#">Support</a>
+        <a href="#">Deals</a>
+        <a href="#">Find a Store</a>
+        <a href="#">About Us</a>
+    </div>
+    <div class="nav">
+      <h1>Search your products</h1>
+      
+    </div>
+    <div id="filter">
+      <input type="number" id="lower" placeholder="From" />
+      <input type="number" id="upper" placeholder="To" />
+      <button id="filter-btn">Search</button>
+    </div>
+    <select id="sort">
+      <option value="">Sort By Price</option>
+      <option value="asc">Ascending</option>
+      <option value="desc">Descending</option>
+    </select>
+    <h1 id="alert"></h1>
+    <div id="menu-container">
+      <!-- Here Append All the Items  -->
+    </div>
+  </body>
+  <script>
+    // All your JS code for Home Page goes here
+    var menucont=document.getElementById("menu-container")
+    let filter=document.getElementById("filter-btn")
+    let select=document.getElementById("sort")
+    let alert=document.getElementById("alert")
+
+    
+    const url = `https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-coffee`;
+    let arr=[]
+    var array=JSON.parse(localStorage.getItem("buy"))
+    if(array===null){
+      array=[]
+    }
+    fetch(url)
+    .then((request)=>{
+      return request.json()
+    })
+    .then((data)=>{
+      console.log(data)
+      Display(data.data)
+      arr=data.data
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+    
+  filter.addEventListener("click",function(){
+    let lower=document.getElementById("lower")
+    let upper=document.getElementById("upper")
+    
+  let filtered=arr.filter((element)=>{
+    // console.log(element)
+    if(element.price>=lower.value && element.price<=upper.value){
+      return true
+    }
+    else{
+      return false
+    }
+  
+  })
+Display(filtered)
+  })
+  select.addEventListener("change",()=>{
+        if(select.value==="asc"){
+          fetch("https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-coffee?sort=price&order=asc")
+          .then((request)=>{
+            return request.json()
+          })
+
+
+
+          .then((data)=>{
+            console.log(data)
+            Display(data.data)
+          })
+
+
+
+          .catch((err)=>{
+            console.log(err)
+          })
+        }
+        else if(select.value==="desc"){
+          fetch("https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-coffee?sort=price&order=desc")
+         
+          .then((request)=>{
+            return request.json()
+          })
+
+
+          .then((data)=>{
+            Display(data.data)
+          })
+
+
+          .catch((err)=>{
+            console.log(err)
+          })
+
+        }
+        else{
+          fetch("https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-coffee")
+    .then((request)=>{
+      return request.json()
+    })
+    .then((data)=>{
+      // console.log(data)
+      Display(data.data)
+      
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+        }
+       })
+
+
+
+ function Display(data){
+  menucont.innerHTML=""
+  data.forEach((element)=>{
+   let div=document.createElement("Div")
+
+   let title=document.createElement("h3")
+   title.innerText=element.title
+
+   let image=document.createElement("img")
+   image.setAttribute("src",element.image)
+  let desc=document.createElement("p")
+  desc.innerText=element.description
+  let price=document.createElement("h4")
+  price.innerText=(element.price)
+  let btn=document.createElement("button")
+  btn.innerText="Buy"
+  var quant=0
+  btn.addEventListener("click",function(){
+    quant++
+   
+    if(quant===1){
+      array.push(element)
+     localStorage.setItem("buy",JSON.stringify(array))
+     alert.innerText="Successfully Placed Order"
+    }
+    else{
+      alert.innerText="Already Placed Order"
+    }
+  })
+  div.append(image,title,desc,price,btn)
+  menucont.append(div)
+  
+ 
+
+  })
+ }
+
+  </script>
+</html>
